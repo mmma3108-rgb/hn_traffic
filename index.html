@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>올바른 우회전 방법 교육</title>
+  <style>
+    :root {
+      --bg: #22323d;
+      --phone: #0b1220;
+      --panel: #10192b;
+      --panel-2: #17233a;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --muted: #bfd0e0;
+      --blue: #3b82f6;
+      --yellow: #f59e0b;
+      --green: #22c55e;
+      --red: #d14a39;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(180deg, #22323d, #1d2b36);
+      color: var(--text);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    }
+
+    .phone {
+      width: min(100vw, 430px);
+      min-height: 100vh;
+      background: var(--phone);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hidden { display: none !important; }
+
+    .landing {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 22px;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(96, 165, 250, 0.3), transparent 24%),
+        radial-gradient(circle at 82% 78%, rgba(250, 204, 21, 0.16), transparent 22%),
+        linear-gradient(180deg, #06101d, #0d1b31 54%, #101f36);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .landing::before,
+    .landing::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(10px);
+    }
+
+    .landing::before {
+      width: 180px;
+      height: 180px;
+      background: rgba(59, 130, 246, 0.14);
+      top: -36px;
+      right: -40px;
+    }
+
+    .landing::after {
+      width: 140px;
+      height: 140px;
+      background: rgba(250, 204, 21, 0.1);
+      left: -34px;
+      bottom: 80px;
+    }
+
+    .landing h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      word-break: keep-all;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      font-weight: 900;
+      text-shadow: 0 2px 14px rgba(59, 130, 246, 0.12);
+    }
+
+    .landing-subtitle {
+      margin: 12px 0 0;
+      color: #dbeafe;
+      font-size: 19px;
+      line-height: 1.5;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      letter-spacing: -0.03em;
+    }
+
+    .landing-copy {
+      margin: 16px 0 0;
+      color: #c6d6e8;
+      font-size: 15px;
+      line-height: 1.75;
+      word-break: keep-all;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .landing-brand {
+      margin: 34px 0 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .landing-logo-wrap {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(242, 247, 255, 0.98));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3px;
+    }
+
+    .landing-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 16px;
+      mix-blend-mode: multiply;
+    }
+
+    .landing-brand-text strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 0;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .landing button {
+      width: 100%;
+      margin-top: 10px;
+      min-height: 60px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #3b82f6, #2563eb);
+      color: white;
+      font: inherit;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,0.12), 0 12px 24px rgba(37, 99, 235, 0.22);
+      position: relative;
+      z-index: 1;
+    }
+
+    .landing-bottom {
+      display: none;
+    }
+
+    .topbar {
+      background: #0d3b66;
+      color: #facc15;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 800;
+      padding: 10px 14px 8px;
+      border-bottom: 2px solid #facc15;
+    }
+
+    .title {
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 14px 16px;
+    }
+
+    .tab-btn {
+      min-height: 56px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #18253b;
+      color: var(--muted);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    .screen {
+      display: none;
+      padding: 0 14px 22px;
+    }
+
+    .screen.active { display: block; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .card h2,
+    .card h3 {
+      margin: 0 0 10px;
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+    }
+
+    .card h2 { font-size: 22px; }
+    .card h3 { font-size: 18px; }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .video-wrap {
+      margin-top: 10px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #05080f;
+      border: 1px solid var(--line);
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: black;
+    }
+
+    .watch-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .watch-item {
+      background: #1a2740;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 800;
+      word-break: keep-all;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      min-height: 54px;
+      font: inherit;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .btn-primary { background: var(--yellow); color: #111827; }
+    .btn-dark { background: #263752; color: white; }
+    .btn-green { background: #2eaf61; color: white; }
+
+    .quiz-head {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .quiz-step {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #20324f;
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .quiz-question {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.45;
+      letter-spacing: -0.03em;
+      word-break: keep-all;
+    }
+
+    .quiz-image {
+      width: 100%;
+      border-radius: 16px;
+      margin: 14px 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #0a1020;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #18243a;
+      color: white;
+      font: inherit;
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 900;
+      padding: 14px 12px;
+      cursor: pointer;
+      text-align: left;
+      word-break: keep-all;
+    }
+
+    .option.correct {
+      background: rgba(34, 197, 94, 0.18);
+      border-color: rgba(34, 197, 94, 0.34);
+    }
+
+    .option.wrong {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.34);
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 12px;
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 800;
+      word-break: keep-all;
+    }
+
+    .feedback.good {
+      display: block;
+      background: rgba(34, 197, 94, 0.14);
+      color: #dcfce7;
+    }
+
+    .feedback.bad {
+      display: block;
+      background: rgba(239, 68, 68, 0.14);
+      color: #fee2e2;
+    }
+
+    .quiz-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .drive-wrap {
+      background-color: #2c3e50;
+      border: 4px solid #111;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .drive-head {
+      background-color: rgba(0, 0, 0, 0.92);
+      color: #f1c40f;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+      border-bottom: 2px solid #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn {
+      background-color: #f1c40f;
+      color: #000;
+      border: none;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      border-radius: 6px;
+      cursor: pointer;
+      min-width: 64px;
+    }
+
+    .drive-map {
+      position: relative;
+      width: 100%;
+      height: 430px;
+      background-color: #34495e;
+      overflow: hidden;
+    }
+
+    .road-vertical { position: absolute; top: 0; left: 30%; width: 40%; height: 100%; background-color: #080b10; }
+    .road-horizontal { position: absolute; top: 8%; left: 0; width: 100%; height: 35%; background-color: #080b10; }
+    .intersection-center { position: absolute; top: 8%; left: 30%; width: 40%; height: 35%; background-color: #080b10; }
+    .center-line-v { position: absolute; top: 0; left: 50%; width: 4px; height: 100%; border-left: 2px solid #f1c40f; border-right: 2px solid #f1c40f; transform: translateX(-50%); }
+    .center-line-h { position: absolute; top: 50%; left: 0; width: 100%; height: 4px; border-top: 2px solid #f1c40f; border-bottom: 2px solid #f1c40f; transform: translateY(-50%); }
+
+    #main-stop-line { position: absolute; bottom: 44%; left: 50%; width: 20%; height: 5px; background-color: #fff; z-index: 5; }
+    .crosswalk-h { position: absolute; width: 40%; height: 40px; display: flex; justify-content: space-around; padding: 2px; z-index: 5; }
+    .crosswalk-h .stripe { width: 12px; height: 100%; background-color: #fff; }
+    .crosswalk-v { position: absolute; width: 40px; height: 35%; display: flex; flex-direction: column; justify-content: space-around; padding: 2px; z-index: 5; }
+    .crosswalk-v .stripe { width: 100%; height: 12px; background-color: #fff; }
+
+    #bottom-crosswalk { top: 44%; left: 30%; }
+    #top-crosswalk { top: 1%; left: 30%; }
+    #left-crosswalk { top: 8%; left: 20%; }
+    #right-crosswalk { top: 8%; right: 20%; }
+
+    .plaza-area { position: absolute; width: 30%; height: 57%; bottom: 0; z-index: 4; background-color: #161d28; }
+    #left-plaza { left: 0; border-top-right-radius: 45px; }
+    #right-plaza { right: 0; border-top-left-radius: 45px; }
+    .top-plaza-left { position: absolute; top: 0; left: 0; width: 30%; height: 8%; background-color: #161d28; z-index: 4; border-bottom-right-radius: 45px; }
+    .top-plaza-right { position: absolute; top: 0; right: 0; width: 30%; height: 8%; background-color: #161d28; z-index: 4; border-bottom-left-radius: 45px; }
+
+    .tree {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: #14532d;
+      border-radius: 50%;
+      box-shadow: inset -4px -4px 0 rgba(0,0,0,0.2);
+    }
+    .tree::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 10px;
+      background: #5c3a1a;
+      bottom: -8px;
+      left: 9px;
+      z-index: -1;
+    }
+
+    .bench {
+      position: absolute;
+      width: 40px;
+      height: 14px;
+      background: #b45309;
+      border-radius: 2px;
+    }
+    .bench::before, .bench::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 6px;
+      background: #1f2937;
+      bottom: -6px;
+    }
+    .bench::before { left: 4px; }
+    .bench::after { right: 4px; }
+
+    .person-stand { position: absolute; width: 12px; height: 28px; }
+    .person-stand .head,
+    .person-sit .head {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ffcc99;
+      border-radius: 50%;
+      top: 0;
+      left: 1px;
+    }
+    .person-stand .body,
+    .person-sit .body {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--shirt);
+      top: 10px;
+      left: 0;
+      border-radius: 3px;
+    }
+    .person-stand .legs,
+    .person-sit .legs {
+      position: absolute;
+      width: 4px;
+      height: 8px;
+      background: #2c3e50;
+      top: 22px;
+      left: 1px;
+      box-shadow: 6px 0 0 #2c3e50;
+    }
+
+    .person-sit { position: absolute; width: 12px; height: 20px; top: -12px; }
+    .person-sit .legs { height: 6px; }
+
+    .light-box {
+      position: absolute;
+      background-color: #111827;
+      border-radius: 6px;
+      z-index: 10;
+      border: 2px solid #0f172a;
+      display: flex;
+      padding: 4px;
+      gap: 4px;
+    }
+    .light-box.horizontal { top: 35%; right: 32%; flex-direction: row; }
+    .light-box.vertical { top: 1%; right: 15%; flex-direction: column; }
+    .light { width: 27px; height: 20px; border-radius: 50%; background-color: #374151; }
+    .ped-light { width: 15px; height: 22px; border-radius: 3px; background-color: #374151; }
+    .light.red.active, .ped-light.red.active { background-color: #ef4444; box-shadow: 0 0 14px rgba(239,68,68,0.65); }
+    .light.green.active, .ped-light.green.active { background-color: #22c55e; box-shadow: 0 0 14px rgba(34,197,94,0.65); }
+
+    #practice-player-car {
+      position: absolute;
+      bottom: 5%;
+      left: 65%;
+      width: 22px;
+      height: 40px;
+      background-color: #e74c3c;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      z-index: 15;
+      transform: translate(-50%, 0) rotate(0deg);
+      transform-origin: center center;
+    }
+    #practice-player-car::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 2px;
+      width: 18px;
+      height: 8px;
+      background-color: #2c3e50;
+      border-radius: 2px 2px 1px 1px;
+    }
+    #practice-player-car::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 2px;
+      width: 18px;
+      height: 5px;
+      background-color: #2c3e50;
+      border-radius: 1px 1px 2px 2px;
+    }
+
+    .car-details { position: absolute; inset: 0; }
+    .roof { position: absolute; top: 16px; left: 2px; width: 18px; height: 10px; background-color: #c0392b; }
+    .lights-front::before, .lights-front::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 1.5px;
+      background-color: #f1c40f;
+    }
+    .lights-front::before { left: 2px; }
+    .lights-front::after { right: 2px; }
+    .wheel { position: absolute; width: 2.5px; height: 7px; background-color: #111111; border-radius: 1px; }
+    .wheel.tl { top: 5px; left: -2.5px; }
+    .wheel.tr { top: 5px; right: -2.5px; }
+    .wheel.bl { bottom: 5px; left: -2.5px; }
+    .wheel.br { bottom: 5px; right: -2.5px; }
+
+    #practice-pedestrian {
+      position: absolute;
+      top: 10%;
+      right: 20%;
+      font-size: 34px;
+      z-index: 16;
+    }
+
+    .drive-dashboard {
+      background-color: #111;
+      padding: 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: white;
+      border-top: 3px solid #000;
+      border-bottom: 1px solid #333;
+    }
+    .speed-box { font-size: 15px; font-weight: 900; color: #67e8f9; }
+    #stop-timer { font-size: 13px; font-weight: 900; color: #facc15; }
+
+    .tutorial {
+      margin: 10px 14px;
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.2);
+      color: #fde68a;
+      font-size: 15px;
+      line-height: 1.6;
+      font-weight: 800;
+      word-break: keep-all;
+    }
+
+    .pedals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 14px 14px;
+    }
+
+    .pedal {
+      position: relative;
+      min-height: 82px;
+      border: 0;
+      border-radius: 18px;
+      color: white;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,0.16);
+      touch-action: none;
+    }
+    .pedal::before {
+      content: "";
+      position: absolute;
+      inset: 12px auto 12px 16px;
+      width: 34px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.16);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18);
+      transform: perspective(120px) rotateX(18deg);
+    }
+    .pedal::after {
+      content: "";
+      position: absolute;
+      inset: 18px auto 18px 27px;
+      width: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.28);
+      transform: perspective(120px) rotateX(18deg);
+    }
+    .pedal.active { transform: translateY(2px); }
+    .pedal.brake { background: linear-gradient(180deg, #d24a3a, #bd3c30); }
+    .pedal.accel { background: linear-gradient(180deg, #2fb463, #239451); }
+    .pedal-label {
+      position: absolute;
+      right: 16px;
+      top: 18px;
+      font-size: 17px;
+      line-height: 1.2;
+      text-align: right;
+    }
+    .pedal-label small {
+      display: block;
+      font-size: 11px;
+      opacity: 0.82;
+      margin-top: 4px;
+    }
+
+    .scenarios {
+      display: grid;
+      gap: 8px;
+      padding: 0 14px 14px;
+    }
+    .scenario-btn {
+      width: 100%;
+      text-align: left;
+      background: #18243a;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 14px;
+      padding: 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+    .scenario-btn.active {
+      background: #23416f;
+      border-color: rgba(96, 165, 250, 0.28);
+    }
+    .scenario-btn strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .scenario-btn span { display: block; font-size: 13px; line-height: 1.45; color: var(--muted); }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.68);
+      padding: 20px;
+      z-index: 200;
+    }
+    .modal.show { display: flex; }
+    .modal-card {
+      width: min(100%, 392px);
+      background: #0f1728;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 18px;
+    }
+    .modal-card h3 { margin: 0 0 8px; font-size: 22px; }
+    .modal-card p { margin: 0 0 12px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .result-list {
+      display: grid;
+      gap: 8px;
+      list-style: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .result-list li {
+      background: #18243a;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #e6edf7;
+    }
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 380px) {
+      .landing-brand {
+        gap: 12px;
+      }
+
+      .landing-logo-wrap {
+        width: 30px;
+        height: 30px;
+      }
+
+      .landing-brand-text strong {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <section class="landing" id="landingScreen">
+      <h1>올바른 우회전 통행방법</h1>
+      <p class="landing-subtitle">우회전 방법 완벽 마스터!</p>
+      <p class="landing-copy">우회전 방법을 쉽고 안전하게 익힐 수 있도록 구성한 교육 프로그램입니다.</p>
+      <button id="startAppBtn" type="button">시작하기</button>
+      <div class="landing-brand">
+        <div class="landing-logo-wrap">
+          <img class="landing-logo" src="assets/haenam-police.jpg" alt="해남경찰서 로고">
+        </div>
+        <div class="landing-brand-text">
+          <strong>해남경찰서 교통과</strong>
+        </div>
+      </div>
+      <div class="landing-bottom">영상 시청 · 퀴즈 · 실습 순서로 진행됩니다.</div>
+    </section>
+
+    <div id="appShell" class="hidden">
+      <div class="topbar">안전한 우회전 통행방법! <해남경찰서 교통과></div>
+      <div class="title">
+        <h1>우회전 안전 교육</h1>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-screen="video">1. 영상 시청</button>
+        <button class="tab-btn" data-screen="quiz">2. 퀴즈</button>
+        <button class="tab-btn" data-screen="drive">3. 실습</button>
+      </div>
+
+      <section class="screen active" id="screen-video">
+        <div class="card">
+          <h2>먼저 영상 보기</h2>
+          <p>재생 버튼을 눌러 우회전 교육 영상을 확인하세요.</p>
+          <div class="video-wrap">
+            <video id="trainingVideo" controls playsinline preload="metadata" poster="assets/video-poster.png">
+              <source src="assets/police-right-turn.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>영상에서 꼭 볼 것</h3>
+          <div class="watch-list">
+            <div class="watch-item">빨간 신호일 때는 정지선 앞에서 먼저 멈추기</div>
+            <div class="watch-item">보행자가 건너면 무조건 기다리기</div>
+            <div class="watch-item">안전할 때만 천천히 우회전하기</div>
+          </div>
+          <div class="row">
+            <button class="btn btn-primary" id="toQuizBtn">퀴즈 시작</button>
+            <button class="btn btn-dark" id="toDriveBtn">바로 실습</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-quiz">
+        <div class="card">
+          <div class="quiz-head">
+            <div class="quiz-step" id="quizStep">문제 1 / 3</div>
+            <h2 class="quiz-question" id="quizQuestion"></h2>
+          </div>
+          <img class="quiz-image" id="quizImage" alt="퀴즈 상황 이미지">
+          <div class="options" id="quizOptions"></div>
+          <div class="feedback" id="quizFeedback"></div>
+          <div class="quiz-nav">
+            <button class="btn btn-dark" id="quizPrevBtn">이전</button>
+            <button class="btn btn-green" id="quizNextBtn" disabled>다음</button>
+          </div>
+          <div class="hint" id="quizHint">사진을 보고 가장 맞는 답을 선택하세요.</div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-drive">
+        <div class="drive-wrap">
+          <div class="drive-head">
+            <button class="nav-btn" id="practicePrevBtn">◀ 이전</button>
+            <span id="practiceScenarioText">상황을 로딩 중입니다...</span>
+            <button class="nav-btn" id="practiceNextBtn">다음 ▶</button>
+          </div>
+
+          <div class="drive-map" id="intersection-map">
+            <div class="road-vertical"><div class="center-line-v"></div></div>
+            <div class="road-horizontal"><div class="center-line-h"></div></div>
+            <div class="intersection-center"></div>
+
+            <div class="top-plaza-left"></div>
+            <div class="top-plaza-right"></div>
+
+            <div id="left-plaza" class="plaza-area">
+              <div class="tree" style="top: 15%; left: 15%;"></div>
+              <div class="bench" style="top: 45%; left: 20%;">
+                <div class="person-sit" style="left: 5px; --shirt: #e74c3c;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+                <div class="person-sit" style="right: 5px; --shirt: #f1c40f;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              </div>
+              <div class="person-stand" style="top: 70%; left: 20%; --shirt: #2ecc71;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              <div class="person-stand" style="top: 70%; left: 50%; --shirt: #9b59b6;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              <div class="tree" style="bottom: 10%; left: 30%;"></div>
+            </div>
+
+            <div id="right-plaza" class="plaza-area">
+              <div class="person-stand" style="top: 25%; left: 50%; --shirt: #3498db;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              <div class="person-stand" style="top: 28%; left: 70%; --shirt: #e67e22;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              <div class="bench" style="top: 55%; left: 35%;">
+                <div class="person-sit" style="left: 14px; --shirt: #1abc9c;"><div class="head"></div><div class="body"></div><div class="legs"></div></div>
+              </div>
+              <div class="tree" style="bottom: 15%; left: 60%;"></div>
+            </div>
+
+            <div id="main-stop-line"></div>
+            <div id="bottom-crosswalk" class="crosswalk-h"><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div></div>
+            <div id="top-crosswalk" class="crosswalk-h"><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div></div>
+            <div id="left-crosswalk" class="crosswalk-v"><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div></div>
+            <div id="right-crosswalk" class="crosswalk-v"><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div></div>
+
+            <div id="main-traffic-light" class="light-box horizontal">
+              <div id="light-red" class="light red active"></div>
+              <div id="light-green" class="light green"></div>
+            </div>
+
+            <div id="ped-traffic-light" class="light-box vertical">
+              <div id="ped-red" class="ped-light red active"></div>
+              <div id="ped-green" class="ped-light green"></div>
+            </div>
+
+            <div id="practice-player-car">
+              <div class="car-details">
+                <div class="lights-front"></div>
+                <div class="roof"></div>
+                <div class="wheel tl"></div>
+                <div class="wheel tr"></div>
+                <div class="wheel bl"></div>
+                <div class="wheel br"></div>
+              </div>
+            </div>
+
+            <div id="practice-pedestrian" class="hidden">🚶</div>
+          </div>
+
+          <div class="drive-dashboard">
+            <div class="speed-box">현재 속도: <span id="practiceSpeed">0</span> km/h</div>
+            <div id="stop-timer" class="hidden">정지선 일시정지 완료</div>
+          </div>
+
+          <div class="tutorial" id="tutorialText">엑셀 버튼을 눌러 진행하세요. 빨간 신호면 정지선 앞에서 먼저 멈춰야 합니다.</div>
+
+          <div class="pedals">
+            <button class="pedal brake" id="brakeBtn" type="button">
+              <span class="pedal-label">브레이크<small>길게 누르기</small></span>
+            </button>
+            <button class="pedal accel" id="accelBtn" type="button">
+              <span class="pedal-label">엑셀<small>길게 누르기</small></span>
+            </button>
+          </div>
+
+          <div class="scenarios" id="scenarioTabs"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal">
+    <div class="modal-card">
+      <h3 id="resultTitle">결과</h3>
+      <p id="resultMessage"></p>
+      <ul class="result-list" id="resultList"></ul>
+      <div class="modal-actions">
+        <button class="btn btn-green" id="retryBtn">다시</button>
+        <button class="btn btn-dark" id="nextScenarioBtn">다음</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const screens = ["video", "quiz", "drive"];
+    const stepButtons = Array.from(document.querySelectorAll(".tab-btn"));
+    const screenEls = {
+      video: document.getElementById("screen-video"),
+      quiz: document.getElementById("screen-quiz"),
+      drive: document.getElementById("screen-drive")
+    };
+
+    const quizData = [
+      {
+        image: "assets/quiz-1.png",
+        question: "이 장면에서 가장 먼저 해야 할 일은 무엇일까요?",
+        options: ["정지선 앞에서 먼저 멈춘다", "보행자가 없으니 바로 간다", "속도만 줄이고 지나간다"],
+        answer: 0,
+        explain: "빨간 신호가 보이는 상황에서는 정지선 앞에서 먼저 완전히 멈추는 것이 중요합니다."
+      },
+      {
+        image: "assets/quiz-2.png",
+        question: "보행자가 건너는 모습이 보이면 어떻게 해야 할까요?",
+        options: ["차가 먼저 지나간다", "보행자가 다 지나갈 때까지 기다린다", "경적을 울리고 지나간다"],
+        answer: 1,
+        explain: "횡단보도를 건너는 보행자가 있으면 차량보다 보행자가 우선입니다."
+      },
+      {
+        image: "assets/quiz-3.png",
+        question: "보행자가 지나간 뒤 우회전할 때 맞는 방법은 무엇일까요?",
+        options: ["빠르게 꺾어 통과한다", "안전 확인 후 천천히 서행한다", "신호만 맞으면 바로 출발한다"],
+        answer: 1,
+        explain: "안전 확인이 끝난 뒤에도 우회전은 천천히 서행하는 것이 맞습니다."
+      }
+    ];
+
+    const practiceScenarios = [
+      { id: 0, text: "상황 1: 차량적색 / 보행적색 / 사람없음", mainRed: true, pedGreen: false, hasPed: false, tutorial: "엑셀 버튼을 눌러 진행하세요. 빨간 신호일 때는 정지선 앞에서 먼저 멈추세요." },
+      { id: 1, text: "상황 2: 차량적색 / 보행녹색 / 사람있음", mainRed: true, pedGreen: true, hasPed: true, tutorial: "먼저 멈춘 뒤, 보행자가 횡단보도를 완전히 지날 때까지 기다리세요." },
+      { id: 2, text: "상황 3: 차량적색 / 보행녹색 / 사람없음", mainRed: true, pedGreen: true, hasPed: false, tutorial: "보행자 신호가 녹색이어도 사람이 없으면 정지 후 천천히 통과할 수 있습니다." },
+      { id: 3, text: "상황 4: 차량녹색 / 보행적색 / 사람없음", mainRed: false, pedGreen: false, hasPed: false, tutorial: "차량 신호가 녹색이면 서행하며 우회전하세요." },
+      { id: 4, text: "상황 5: 차량녹색 / 보행녹색 / 사람있음", mainRed: false, pedGreen: true, hasPed: true, tutorial: "초록 신호여도 보행자가 보이면 먼저 양보하고 기다려야 합니다." },
+      { id: 5, text: "상황 6: 차량녹색 / 보행녹색 / 사람없음", mainRed: false, pedGreen: true, hasPed: false, tutorial: "보행자가 없는 것이 확실하면 천천히 우회전하세요." }
+    ];
+
+    const appShell = document.getElementById("appShell");
+    const landingScreen = document.getElementById("landingScreen");
+    const startAppBtn = document.getElementById("startAppBtn");
+    const trainingVideo = document.getElementById("trainingVideo");
+    const toQuizBtn = document.getElementById("toQuizBtn");
+    const toDriveBtn = document.getElementById("toDriveBtn");
+    const quizStep = document.getElementById("quizStep");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizImage = document.getElementById("quizImage");
+    const quizOptions = document.getElementById("quizOptions");
+    const quizFeedback = document.getElementById("quizFeedback");
+    const quizPrevBtn = document.getElementById("quizPrevBtn");
+    const quizNextBtn = document.getElementById("quizNextBtn");
+    const quizHint = document.getElementById("quizHint");
+
+    const practiceScenarioText = document.getElementById("practiceScenarioText");
+    const tutorialText = document.getElementById("tutorialText");
+    const practiceSpeed = document.getElementById("practiceSpeed");
+    const stopTimer = document.getElementById("stop-timer");
+    const scenarioTabs = document.getElementById("scenarioTabs");
+    const practicePrevBtn = document.getElementById("practicePrevBtn");
+    const practiceNextBtn = document.getElementById("practiceNextBtn");
+    const brakeBtn = document.getElementById("brakeBtn");
+    const accelBtn = document.getElementById("accelBtn");
+    const practicePlayerCar = document.getElementById("practice-player-car");
+    const practicePedestrian = document.getElementById("practice-pedestrian");
+    const lightRed = document.getElementById("light-red");
+    const lightGreen = document.getElementById("light-green");
+    const pedRed = document.getElementById("ped-red");
+    const pedGreen = document.getElementById("ped-green");
+
+    const resultModal = document.getElementById("resultModal");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultMessage = document.getElementById("resultMessage");
+    const resultList = document.getElementById("resultList");
+    const retryBtn = document.getElementById("retryBtn");
+    const nextScenarioBtn = document.getElementById("nextScenarioBtn");
+
+    const state = {
+      currentScreen: "video",
+      quizIndex: 0,
+      quizAnswered: false,
+      practiceIndex: 0,
+      currentSpeed: 0,
+      progress: 0,
+      isBraking: false,
+      isAcceling: false,
+      hasStoppedOnRed: false,
+      mainLineCleared: false,
+      pedPos: 10,
+      gameInterval: null,
+      isGameOver: true
+    };
+
+    function pauseVideo() {
+      trainingVideo.pause();
+    }
+
+    function showResult(title, message, items) {
+      resultTitle.textContent = title;
+      resultMessage.textContent = message;
+      resultList.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+      resultModal.classList.add("show");
+    }
+
+    function hideResult() {
+      resultModal.classList.remove("show");
+    }
+
+    function setScreen(name) {
+      if (state.currentScreen === "video" && name !== "video") pauseVideo();
+      if (state.currentScreen === "drive" && name !== "drive") clearInterval(state.gameInterval);
+
+      state.currentScreen = name;
+      screens.forEach((screen) => {
+        screenEls[screen].classList.toggle("active", screen === name);
+      });
+      stepButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.screen === name);
+      });
+
+      if (name === "drive") {
+        initPractice();
+      }
+    }
+
+    function renderQuiz() {
+      const item = quizData[state.quizIndex];
+      quizStep.textContent = `문제 ${state.quizIndex + 1} / ${quizData.length}`;
+      quizQuestion.textContent = item.question;
+      quizImage.src = item.image;
+      quizOptions.innerHTML = item.options.map((option, index) => `
+        <button class="option" data-index="${index}" type="button">${option}</button>
+      `).join("");
+      quizFeedback.className = "feedback";
+      quizFeedback.textContent = "";
+      state.quizAnswered = false;
+      quizNextBtn.disabled = true;
+      quizPrevBtn.disabled = state.quizIndex === 0;
+      quizNextBtn.textContent = state.quizIndex === quizData.length - 1 ? "실습 가기" : "다음";
+      quizHint.textContent = "사진을 보고 가장 맞는 답을 선택하세요.";
+    }
+
+    function answerQuiz(index) {
+      if (state.quizAnswered) return;
+      state.quizAnswered = true;
+      const item = quizData[state.quizIndex];
+      const options = Array.from(document.querySelectorAll(".option"));
+      options.forEach((button, idx) => {
+        button.disabled = true;
+        if (idx === item.answer) button.classList.add("correct");
+        if (idx === index && idx !== item.answer) button.classList.add("wrong");
+      });
+
+      const correct = index === item.answer;
+      quizFeedback.classList.add(correct ? "good" : "bad");
+      quizFeedback.textContent = `${correct ? "정답입니다." : "다시 기억해 주세요."} ${item.explain}`;
+      quizNextBtn.disabled = false;
+      quizHint.textContent = correct ? "좋아요. 다음 문제로 넘어가세요." : "설명을 읽고 다음 문제로 넘어가세요.";
+    }
+
+    function nextQuiz() {
+      if (state.quizIndex === quizData.length - 1) {
+        setScreen("drive");
+        return;
+      }
+      state.quizIndex += 1;
+      renderQuiz();
+    }
+
+    function prevQuiz() {
+      if (state.quizIndex === 0) return;
+      state.quizIndex -= 1;
+      renderQuiz();
+    }
+
+    function currentPracticeScenario() {
+      return practiceScenarios[state.practiceIndex];
+    }
+
+    function renderPracticeTabs() {
+      scenarioTabs.innerHTML = practiceScenarios.map((scenario, index) => `
+        <button class="scenario-btn ${index === state.practiceIndex ? "active" : ""}" data-scenario="${index}" type="button">
+          <strong>상황 ${index + 1}</strong>
+          <span>${scenario.text}</span>
+        </button>
+      `).join("");
+    }
+
+    function setPracticeScenario() {
+      const activeData = currentPracticeScenario();
+      practiceScenarioText.textContent = activeData.text;
+      tutorialText.textContent = activeData.tutorial;
+
+      lightRed.classList.toggle("active", activeData.mainRed);
+      lightGreen.classList.toggle("active", !activeData.mainRed);
+      pedRed.classList.toggle("active", !activeData.pedGreen);
+      pedGreen.classList.toggle("active", activeData.pedGreen);
+
+      if (activeData.hasPed) {
+        practicePedestrian.classList.remove("hidden");
+      } else {
+        practicePedestrian.classList.add("hidden");
+      }
+    }
+
+    function initPractice() {
+      state.currentSpeed = 0;
+      state.progress = 0;
+      state.isBraking = false;
+      state.isAcceling = false;
+      state.hasStoppedOnRed = false;
+      state.mainLineCleared = false;
+      state.pedPos = 10;
+      state.isGameOver = false;
+
+      hideResult();
+      practicePlayerCar.style.bottom = "5%";
+      practicePlayerCar.style.left = "65%";
+      practicePlayerCar.style.transform = "translate(-50%, 0) rotate(0deg)";
+      practicePedestrian.style.top = "10%";
+      practicePedestrian.style.right = "20%";
+      stopTimer.classList.add("hidden");
+      practiceSpeed.textContent = "0";
+      brakeBtn.classList.remove("active");
+      accelBtn.classList.remove("active");
+
+      renderPracticeTabs();
+      setPracticeScenario();
+      clearInterval(state.gameInterval);
+      state.gameInterval = setInterval(gameLoop, 100);
+    }
+
+    function prevPracticeScenario() {
+      state.practiceIndex = (state.practiceIndex - 1 + practiceScenarios.length) % practiceScenarios.length;
+      initPractice();
+    }
+
+    function nextPracticeScenario() {
+      state.practiceIndex = (state.practiceIndex + 1) % practiceScenarios.length;
+      initPractice();
+    }
+
+    function gameLoop() {
+      if (state.isGameOver) return;
+
+      let maxSpeed = 50;
+      if (state.progress > 240) maxSpeed = 20;
+
+      if (state.isBraking) {
+        state.currentSpeed -= 4.0;
+        if (state.currentSpeed < 0) state.currentSpeed = 0;
+      } else if (state.isAcceling) {
+        state.currentSpeed += 2.5;
+        if (state.currentSpeed > maxSpeed) state.currentSpeed = maxSpeed;
+      } else {
+        state.currentSpeed -= 0.5;
+        if (state.currentSpeed < 0) state.currentSpeed = 0;
+      }
+
+      practiceSpeed.textContent = Math.round(state.currentSpeed);
+      state.progress += state.currentSpeed * 0.13;
+
+      if (state.progress < 310) {
+        const bottomPos = 5 + (state.progress * 0.145);
+        practicePlayerCar.style.bottom = `${bottomPos}%`;
+        practicePlayerCar.style.left = "65%";
+        practicePlayerCar.style.transform = "translate(-50%, 0) rotate(0deg)";
+      } else if (state.progress < 380) {
+        const turnPct = (state.progress - 310) / 70;
+        const bottomPos = 50 + (Math.sin(turnPct * Math.PI / 2) * 8.5);
+        const leftPos = 65 + ((1 - Math.cos(turnPct * Math.PI / 2)) * 13.5);
+        practicePlayerCar.style.bottom = `${bottomPos}%`;
+        practicePlayerCar.style.left = `${leftPos}%`;
+        practicePlayerCar.style.transform = `translate(-50%, 0) rotate(${turnPct * 90}deg)`;
+      } else {
+        const straightPct = (state.progress - 380) / 100;
+        const leftPos = 78.5 + (straightPct * 20);
+        practicePlayerCar.style.bottom = "58.5%";
+        practicePlayerCar.style.left = `${leftPos}%`;
+        practicePlayerCar.style.transform = "translate(-50%, 0) rotate(90deg)";
+      }
+
+      if (state.progress > 160 && state.progress < 199 && state.currentSpeed === 0) {
+        state.hasStoppedOnRed = true;
+        stopTimer.classList.remove("hidden");
+      }
+
+      const activeData = currentPracticeScenario();
+
+      if (state.progress >= 200 && !state.mainLineCleared) {
+        if (activeData.mainRed && !state.hasStoppedOnRed) {
+          triggerPenalty(
+            "정지선 위반",
+            "빨간 신호에서는 정지선 직전에서 바퀴가 완전히 멈춰야 합니다.",
+            ["빨간 신호일 때는 먼저 멈춥니다.", "정지선 앞에서 완전히 정지해야 합니다."]
+          );
+          return;
+        }
+        state.mainLineCleared = true;
+      }
+
+      if (activeData.hasPed) {
+        if (state.hasStoppedOnRed || state.progress >= 260) {
+          if (state.pedPos < 130) {
+            state.pedPos += 0.45;
+            practicePedestrian.style.top = `${state.pedPos}%`;
+          }
+        }
+      }
+
+      if (state.progress > 333 && state.progress < 370) {
+        if (state.currentSpeed > 20) {
+          triggerPenalty(
+            "서행 위반",
+            "우회전 시 보행자가 없더라도 시속 20km 이하로 천천히 통과해야 합니다.",
+            ["우회전은 서행이 기본입니다.", "빠르게 꺾지 말고 천천히 통과하세요."]
+          );
+          return;
+        }
+
+        if (activeData.hasPed && state.currentSpeed > 0 && state.pedPos < 36) {
+          triggerPenalty(
+            "보행자 보호 의무 위반",
+            activeData.mainRed ? "보행자가 지나가기 전에 출발했습니다." : "초록 신호여도 보행자가 있으면 먼저 양보해야 합니다.",
+            ["보행자가 횡단보도를 완전히 지나갈 때까지 기다립니다.", "보행자 우선이 먼저입니다."]
+          );
+          return;
+        }
+      }
+
+      if (state.progress >= 430) {
+        clearInterval(state.gameInterval);
+        state.isGameOver = true;
+        practiceSpeed.textContent = "0";
+        showResult(
+          "성공",
+          "올바른 순서로 우회전했습니다.",
+          ["정지선 앞에서 먼저 멈췄습니다.", "보행자가 지나갈 때 기다렸습니다.", "안전 확인 후 천천히 우회전했습니다."]
+        );
+      }
+    }
+
+    function triggerPenalty(title, message, items) {
+      clearInterval(state.gameInterval);
+      state.isGameOver = true;
+      practiceSpeed.textContent = "0";
+      showResult(title, message, items);
+    }
+
+    function startBrake() {
+      if (state.isGameOver) return;
+      state.isBraking = true;
+      state.isAcceling = false;
+      brakeBtn.classList.add("active");
+      accelBtn.classList.remove("active");
+    }
+
+    function stopBrake() {
+      state.isBraking = false;
+      brakeBtn.classList.remove("active");
+    }
+
+    function startAccel() {
+      if (state.isGameOver) return;
+      state.isAcceling = true;
+      state.isBraking = false;
+      accelBtn.classList.add("active");
+      brakeBtn.classList.remove("active");
+    }
+
+    function stopAccel() {
+      state.isAcceling = false;
+      accelBtn.classList.remove("active");
+    }
+
+    startAppBtn.addEventListener("click", () => {
+      landingScreen.classList.add("hidden");
+      appShell.classList.remove("hidden");
+    });
+
+    stepButtons.forEach((button) => {
+      button.addEventListener("click", () => setScreen(button.dataset.screen));
+    });
+
+    toQuizBtn.addEventListener("click", () => setScreen("quiz"));
+    toDriveBtn.addEventListener("click", () => setScreen("drive"));
+
+    quizOptions.addEventListener("click", (event) => {
+      const target = event.target.closest(".option");
+      if (!target) return;
+      answerQuiz(Number(target.dataset.index));
+    });
+
+    quizPrevBtn.addEventListener("click", prevQuiz);
+    quizNextBtn.addEventListener("click", nextQuiz);
+
+    practicePrevBtn.addEventListener("click", prevPracticeScenario);
+    practiceNextBtn.addEventListener("click", nextPracticeScenario);
+
+    scenarioTabs.addEventListener("click", (event) => {
+      const target = event.target.closest(".scenario-btn");
+      if (!target) return;
+      state.practiceIndex = Number(target.dataset.scenario);
+      initPractice();
+    });
+
+    brakeBtn.addEventListener("pointerdown", (event) => { event.preventDefault(); startBrake(); });
+    brakeBtn.addEventListener("pointerup", stopBrake);
+    brakeBtn.addEventListener("pointerleave", stopBrake);
+    brakeBtn.addEventListener("pointercancel", stopBrake);
+
+    accelBtn.addEventListener("pointerdown", (event) => { event.preventDefault(); startAccel(); });
+    accelBtn.addEventListener("pointerup", stopAccel);
+    accelBtn.addEventListener("pointerleave", stopAccel);
+    accelBtn.addEventListener("pointercancel", stopAccel);
+
+    retryBtn.addEventListener("click", () => initPractice());
+    nextScenarioBtn.addEventListener("click", () => nextPracticeScenario());
+
+    resultModal.addEventListener("click", (event) => {
+      if (event.target === resultModal) hideResult();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (state.currentScreen !== "drive" || event.repeat) return;
+      if (event.key === "ArrowDown") { event.preventDefault(); startBrake(); }
+      if (event.key === "ArrowUp" || event.key === " ") { event.preventDefault(); startAccel(); }
+    });
+
+    document.addEventListener("keyup", (event) => {
+      if (event.key === "ArrowDown") stopBrake();
+      if (event.key === "ArrowUp" || event.key === " ") stopAccel();
+    });
+
+    trainingVideo.addEventListener("error", () => {
+      const box = document.createElement("div");
+      box.className = "watch-item";
+      box.textContent = "영상이 보이지 않으면 assets 폴더의 MP4 파일이 함께 올라갔는지 확인해 주세요.";
+      document.querySelector(".watch-list").appendChild(box);
+    });
+
+    renderQuiz();
+    renderPracticeTabs();
+  </script>
+</body>
+</html>
