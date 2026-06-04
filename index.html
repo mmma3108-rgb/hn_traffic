@@ -678,6 +678,9 @@
       overflow: hidden;
       box-shadow: inset 0 -4px 0 rgba(0,0,0,0.16);
       touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
     .pedal::before {
       content: "";
@@ -701,19 +704,15 @@
     .pedal.active { transform: translateY(2px); }
     .pedal.brake { background: linear-gradient(180deg, #d24a3a, #bd3c30); }
     .pedal.accel { background: linear-gradient(180deg, #2fb463, #239451); }
-    .pedal-label {
+    .pedal-image {
       position: absolute;
-      right: 16px;
-      top: 15px;
-      font-size: 15px;
-      line-height: 1.2;
-      text-align: right;
-    }
-    .pedal-label small {
-      display: block;
-      font-size: 10px;
-      opacity: 0.82;
-      margin-top: 3px;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      -webkit-user-drag: none;
+      user-select: none;
     }
 
     .scenarios {
@@ -828,7 +827,7 @@
 
       <section class="screen active" id="screen-video">
         <div class="card">
-          <h2>영상 보기</h2>
+          <h2>먼저 영상 보기</h2>
           <p>재생 버튼을 눌러 우회전 교육 영상을 확인하세요.</p>
           <div class="video-wrap">
             <video id="trainingVideo" controls playsinline preload="metadata" poster="assets/video-poster.png">
@@ -942,11 +941,11 @@
           <div class="tutorial" id="tutorialText">엑셀 버튼을 눌러 진행하세요. 빨간 신호면 정지선 앞에서 먼저 멈춰야 합니다.</div>
 
           <div class="pedals">
-            <button class="pedal brake" id="brakeBtn" type="button">
-              <span class="pedal-label">브레이크<small>길게 누르기</small></span>
+            <button class="pedal brake" id="brakeBtn" type="button" aria-label="브레이크">
+              <img class="pedal-image" src="assets/pedal-brake.svg" alt="">
             </button>
-            <button class="pedal accel" id="accelBtn" type="button">
-              <span class="pedal-label">엑셀<small>길게 누르기</small></span>
+            <button class="pedal accel" id="accelBtn" type="button" aria-label="엑셀">
+              <img class="pedal-image" src="assets/pedal-accel.svg" alt="">
             </button>
           </div>
 
